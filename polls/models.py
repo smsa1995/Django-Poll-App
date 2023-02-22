@@ -66,3 +66,12 @@ class Vote(models.Model):
 
     def __str__(self):
         return f'{self.poll.text[:15]} - {self.choice.choice_text[:15]} - {self.user.username}'
+
+
+
+
+
+
+
+
+# mr ashoor
