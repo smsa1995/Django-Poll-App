@@ -14,18 +14,16 @@ def seed_users(num_entries=10, overwrite=False):
     if overwrite:
         print("Overwriting Users")
         Users.objects.all().delete()
-    count = 0
-    for _ in range(num_entries):
+    for count, _ in enumerate(range(num_entries), start=1):
         first_name = fake.first_name()
         last_name = fake.last_name()
         u = User.objects.create_user(
             first_name=first_name,
             last_name=last_name,
-            email=first_name + "." + last_name + "@fakermail.com",
+            email=f"{first_name}.{last_name}@fakermail.com",
             username=first_name + last_name,
-            password="password"
+            password="password",
         )
-        count += 1
         percent_complete = count / num_entries * 100
         print(
             "Adding {} new Users: {:.2f}%".format(
@@ -45,8 +43,7 @@ def seed_polls(num_entries=10, choice_min=2, choice_max=5, overwrite=False):
         print('Overwriting polls')
         Poll.objects.all().delete()
     users = list(User.objects.all())
-    count = 0
-    for _ in range(num_entries):
+    for count, _ in enumerate(range(num_entries), start=1):
         p = Poll(
             owner=random.choice(users),
             text=fake.paragraph(),
@@ -59,7 +56,6 @@ def seed_polls(num_entries=10, choice_min=2, choice_max=5, overwrite=False):
                 poll=p,
                 choice_text=fake.sentence()
             ).save()
-        count += 1
         percent_complete = count / num_entries * 100
         print(
             "Adding {} new Polls: {:.2f}%".format(
@@ -114,4 +110,4 @@ def seed_all(num_entries=10, overwrite=False):
     elapsed_time = time.time() - start_time
     minutes = int(elapsed_time // 60)
     seconds = int(elapsed_time % 60)
-    print("Script Execution took: {} minutes {} seconds".format(minutes, seconds))
+    print(f"Script Execution took: {minutes} minutes {seconds} seconds")
