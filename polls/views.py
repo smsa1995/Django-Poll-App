@@ -56,30 +56,29 @@ def list_by_user(request):
 
 @login_required()
 def polls_add(request):
-    if request.user.has_perm('polls.add_poll'):
-        if request.method == 'POST':
-            form = PollAddForm(request.POST)
-            if form.is_valid:
-                poll = form.save(commit=False)
-                poll.owner = request.user
-                poll.save()
-                new_choice1 = Choice(
-                    poll=poll, choice_text=form.cleaned_data['choice1']).save()
-                new_choice2 = Choice(
-                    poll=poll, choice_text=form.cleaned_data['choice2']).save()
-
-                messages.success(
-                    request, "Poll & Choices added successfully.", extra_tags='alert alert-success alert-dismissible fade show')
-
-                return redirect('polls:list')
-        else:
-            form = PollAddForm()
-        context = {
-            'form': form,
-        }
-        return render(request, 'polls/add_poll.html', context)
-    else:
+    if not request.user.has_perm('polls.add_poll'):
         return HttpResponse("Sorry but you don't have permission to do that!")
+    if request.method == 'POST':
+        form = PollAddForm(request.POST)
+        if form.is_valid:
+            poll = form.save(commit=False)
+            poll.owner = request.user
+            poll.save()
+            new_choice1 = Choice(
+                poll=poll, choice_text=form.cleaned_data['choice1']).save()
+            new_choice2 = Choice(
+                poll=poll, choice_text=form.cleaned_data['choice2']).save()
+
+            messages.success(
+                request, "Poll & Choices added successfully.", extra_tags='alert alert-success alert-dismissible fade show')
+
+            return redirect('polls:list')
+    else:
+        form = PollAddForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'polls/add_poll.html', context)
 
 
 @login_required
@@ -180,10 +179,7 @@ def poll_detail(request, poll_id):
     if not poll.active:
         return render(request, 'polls/poll_result.html', {'poll': poll})
     loop_count = poll.choice_set.count()
-    context = {
-        'poll': poll,
-        'loop_time': range(0, loop_count),
-    }
+    context = {'poll': poll, 'loop_time': range(loop_count)}
     return render(request, 'polls/poll_detail.html', context)
 
 
@@ -218,6 +214,4 @@ def endpoll(request, poll_id):
     if poll.active is True:
         poll.active = False
         poll.save()
-        return render(request, 'polls/poll_result.html', {'poll': poll})
-    else:
-        return render(request, 'polls/poll_result.html', {'poll': poll})
+    return render(request, 'polls/poll_result.html', {'poll': poll})
