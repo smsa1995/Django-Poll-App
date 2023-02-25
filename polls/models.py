@@ -74,4 +74,4 @@ class Vote(models.Model):
 
 
 
-# mr ashoor
+# mr ashoor name
