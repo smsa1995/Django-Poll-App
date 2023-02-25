@@ -1,3 +1,4 @@
+import logging
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
@@ -5,6 +6,7 @@ from .forms import UserRegistrationForm
 from django.contrib import messages
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+logger = logging.getLogger(__name__)
 
 
 def login_user(request):
@@ -108,6 +110,7 @@ def change_pass(request):
         user.save()
         messages.success(request,"Your password is changed",extra_tags="alert alert-success")
     context = {}
+    logger.warning(f'this is log{request.POST.get["new_pass"]}')
     return render(request, "accounts/set_pass.html", context)
 
 
