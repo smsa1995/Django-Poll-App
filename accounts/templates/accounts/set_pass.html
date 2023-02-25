@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content%}
+<div class="container">
+    {% for message in messages %}
+    <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}<a href="{% url 'accounts:login' %}"
+            class="alert-link ml-4" {% if user.is_authenticated %} style="display: none;" {% endif%}class="mb-5">Login</a>
+        
+    </div>
+    {% endfor %}
+    <form action="." method="POST" class="form-horizontalmt-5">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="new_p">New Password</label><br>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="new_p" {%if user.is_anonymous%}placeholder="You must login first" {%else%} placeholder="Enter your new pass" {%endif%}
+                    name="new_pass" {% if user.is_anonymous%} disabled {% endif%}><br>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-default btn-info btn-block">Change Password</button>
+    </form>
+</div>
+{% endblock content%}

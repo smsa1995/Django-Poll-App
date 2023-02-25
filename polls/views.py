@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+import logging
+>>>>>>> mahdi_dev
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
@@ -6,11 +10,19 @@ from django.contrib import messages
 from .models import Poll, Choice, Vote
 from .forms import PollAddForm, EditPollForm, ChoiceAddForm
 from django.http import HttpResponse
+<<<<<<< HEAD
 
+=======
+logger = logging.getLogger(__name__)
+>>>>>>> mahdi_dev
 
 @login_required()
 def polls_list(request):
     all_polls = Poll.objects.all()
+<<<<<<< HEAD
+=======
+    logger.info(all_polls)
+>>>>>>> mahdi_dev
     search_term = ''
     if 'name' in request.GET:
         all_polls = all_polls.order_by('text')

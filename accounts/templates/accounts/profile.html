@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-5">Welcome  <kbd>{{user|title}}</kbd> </h1>
+    <a href="{% url 'accounts:changepass' %}" class="btn btn-info btn-block" role="button">Change your password</a>
+</div>   
+<div class="container mt-5">
+    <h1 class="mb-5">Users in your site <kbd>{{user|title}}</kbd> </h1>
+    
+</div>   
+{% endblock content%}
