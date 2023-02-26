@@ -7,9 +7,6 @@ urlpatterns=[
     path('login/', views.login_user, name='login'),
     path('logout/', views.logout_user, name='logout'),
     path('register/', views.create_user, name='register'),
-<<<<<<< HEAD
-=======
     path('changepass/', views.change_pass, name='changepass'),
     path('profile/', views.profile, name='profile')
->>>>>>> mahdi_dev
 ]

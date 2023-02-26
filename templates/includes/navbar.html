@@ -17,10 +17,8 @@
         </ul>
         <div class="navbar-nav ml-auto">
             {% if request.user.is_authenticated %}
-<<<<<<< HEAD
-=======
+
             <a class="nav-link" href="{% url 'accounts:profile' %}">Profile</a>
->>>>>>> mahdi_dev
             <a class="nav-link" href="{% url 'polls:list_by_user' %}">My Polls</a>
             <a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a>
             {% else %}

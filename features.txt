@@ -1,0 +1,65 @@
+
+poll_list : ## showing all vote in web app
+            
+            sorted_by:
+                    name
+                    date
+                    number of vote
+                    search input
+            pagination:
+                    page number for navigation
+            add poll btu --> @admin_log
+
+my_poll:    ## showing vote of user
+            
+            sorted by: --> showing user poll
+                    name
+                    date
+                    number of vote
+                    search input
+            pagination:
+                    page number for navigation
+            add poll btu --> @admin_log
+            edit vote btu --> if user was admin
+            end vote btu --> if user was admin
+
+profile_page:   ## profile page of each user
+            greeting
+            change pass btu
+
+
+chnaging_password: ## page for changing password -->@user_login
+            submit btu
+            new_pass input
+            massages for warning login or successfull process
+            link for switching page for login page if user didn't login
+
+poll_view:      ## page for vote are created in past and user want to vote
+            showing poll sentence and choice_set
+            btu for submit vote
+            btu for canceling and Return
+            dynamic url
+
+
+login:      ## page for logining
+        username/email input
+        pass input
+        link for switch page for registering
+
+
+register:   ##page for register new user
+        username input
+        pass input
+        email input
+        confirm pass --> cheking passes are equal
+        link for switch page for login
+
+
+adding_poll: ## page for adding new vote --> @admin_log
+        text input
+        two chice input
+        add btu
+        cancel btu
+
+
+        
