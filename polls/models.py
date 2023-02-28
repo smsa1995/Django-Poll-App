@@ -9,6 +9,7 @@ class Poll(models.Model):
     text = models.TextField()
     pub_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
+    pub_state = models.BooleanField(default=True)
 
     def user_can_vote(self, user):
         """ 

@@ -12,6 +12,8 @@ logger = logging.getLogger(__name__)
 
 @login_required()
 def polls_list(request):
+    user_poll_active = Poll.objects.filter(active = True, owner_id = request.user.id)
+    user_poll_passive = Poll.objects.filter(active = False, owner_id = request.user.id)
     all_polls = Poll.objects.all()
     logger.info(all_polls)
     search_term = ''
@@ -39,6 +41,8 @@ def polls_list(request):
         'polls': polls,
         'params': params,
         'search_term': search_term,
+        'user_poll_active':user_poll_active,
+        'user_poll_passive':user_poll_passive,
     }
     return render(request, 'polls/polls_list.html', context)
 
@@ -47,14 +51,16 @@ def polls_list(request):
 def list_by_user(request):
     all_polls = Poll.objects.filter(owner=request.user)
     paginator = Paginator(all_polls, 7)  # Show 7 contacts per page
+    
 
     page = request.GET.get('page')
     polls = paginator.get_page(page)
 
     context = {
         'polls': polls,
+        
     }
-    return render(request, 'polls/polls_list.html', context)
+    return render(request, 'polls/poll_list_user.html', context)
 
 
 @login_required()

@@ -1,6 +1,5 @@
 
 import logging
-from polls.models import Poll
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
@@ -115,18 +114,12 @@ def change_pass(request):
 
 def profile(request):
     user = User.objects.all().get(username = request.user)
-    print(user)
-    user_poll_active = Poll.objects.all().filter(active = True, owner_id = request.user.id)
-    user_poll_passive = Poll.objects.all().filter(active = False, owner_id = request.user.id)
-
-    # user_poll = Poll.objects.filter(owner = request.user)
     if request.user.is_anonymous:
         return redirect('home')
     
     context = {
         'user' : user ,
-        'user_poll_active':user_poll_active,
-        'user_poll_passive':user_poll_passive,
+        
     }
     return render(request, "accounts/profile.html",context)
 

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#notended_poll" class="ml-5">Not ended poll</a></li>
+        <li><a data-toggle="tab" href="#ended_poll" class="ml-5">Ended poll</a></li>
+    </ul>
+    <div class="tab-content">
+            <div id="notended_poll" class="tab-pane fade in active">
+                <ul>
+                    {% for poll_active in user_poll_active %}
+                    <li class="m-3">{{ poll_active.text }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div id="ended_poll" class="tab-pane fade">
+                <ul>
+                    {% for pollpassive in user_poll_passive %}
+                    <li class="m-3">{{ pollpassive.text }}</li>
+                    {% endfor %}
+                </ul>
+            </div>  
+    </div>
+</div>
+{% endblock content %}
