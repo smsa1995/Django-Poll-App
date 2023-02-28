@@ -1,7 +1,32 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block content %}
 <div class="container mt-5">
-    <h1 class="mb-5">Welcome  <kbd>{{user|title}}</kbd> </h1>
+    <h1 class="mb-5">Welcome  <kbd>{{ user|title }}</kbd> </h1>
     <a href="{% url 'accounts:changepass' %}" class="btn btn-info btn-block" role="button">Change your password</a>
-</div>   
-{% endblock content%}
+</div>  
+<div class="container mt-5">
+  {% comment %} table for showing user info {% endcomment %}
+    <table class="table table-dark">
+        <tbody>
+          <tr>
+            <td><kbd>Usename</kbd></td>
+            <td class="text-center">{{ user.username }}</td>
+          </tr>
+          <tr>
+          <td><kbd>Email:</kbd></td>
+          <td class="text-center">{% if user.email == '' %}NOT SET {% else %}{{ user.email }}{% endif %}</td>
+          </tr>
+          <tr>
+            <td><kbd>Your last login</kbd></td>
+            <td class="text-center">{{ user.last_login }}</td>
+          </tr>
+          <tr>
+            <td><kbd>Date of creation:</kbd></td>
+            <td class="text-center">{{ user.date_joined }}</td>
+          </tr>
+          
+        </tbody>
+    </table>
+</div>  
+
+{% endblock content %}

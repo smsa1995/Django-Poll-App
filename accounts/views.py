@@ -1,31 +1,12 @@
 
 import logging
+from polls.models import Poll
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from .forms import UserRegistrationForm
 from django.contrib import messages
 from django.http import HttpResponse
-
-def login_user(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-            redirect_url = request.GET.get('next', 'home')
-            return redirect(redirect_url)
-        else:
-            messages.error(request, "Username Or Password is incorrect!",
-                           extra_tags='alert alert-warning alert-dismissible fade show')
-
-    return render(request, 'accounts/login.html')
-
-from django.contrib.auth.decorators import login_required
-logger = logging.getLogger(__name__)
-
 
 def login_user(request):
     if request.method == "POST":
@@ -133,5 +114,19 @@ def change_pass(request):
 
 
 def profile(request):
-    return render(request, "accounts/profile.html")
+    user = User.objects.all().get(username = request.user)
+    print(user)
+    user_poll_active = Poll.objects.all().filter(active = True, owner_id = request.user.id)
+    user_poll_passive = Poll.objects.all().filter(active = False, owner_id = request.user.id)
+
+    # user_poll = Poll.objects.filter(owner = request.user)
+    if request.user.is_anonymous:
+        return redirect('home')
+    
+    context = {
+        'user' : user ,
+        'user_poll_active':user_poll_active,
+        'user_poll_passive':user_poll_passive,
+    }
+    return render(request, "accounts/profile.html",context)
 
